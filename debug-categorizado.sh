@@ -22,10 +22,16 @@ echo "Contando até $max"
 
 Debug 2 "Vou entrar no WHILE"
 
-while [ $i -ne $max]; do
+while [ $i -ne $max ]; do
+
   Debug 3 "Valor de \$i antes de incrementar: $i"
+
   let i=$i+1
+
+  Debug 3 "Valor de \$i depois de incrementar: $i"
+
   echo "$i..."
+
 done
 
 Debug 2 "Saí do WHILE"
