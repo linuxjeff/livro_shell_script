@@ -6,15 +6,15 @@
 
 # Conta até cinco :)
 
+set -x # Liga debug
+
+trap read DEBUG # Liga passo a paaso
+
 echo $((0+1))
 
 echo $((0+2))
 
-set -xv # Liga debug
-
 echo $((0+3))
-
-set +xv # Desliga debug
 
 echo $((0+4))
 
