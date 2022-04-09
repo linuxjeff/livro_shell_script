@@ -7,7 +7,7 @@
 DEBUG="1"
 
 Debug(){
-  [ "$DEBUG" = 1 ] && echo "----------{ $*"
+  [ "$DEBUG" = 1 ] && echo -e "\033[33;1m$*\033[m"
 }
 
 TXT="gritaria"
