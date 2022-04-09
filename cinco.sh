@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# cinco.#!/bin/sh
+# cinco.sh
 
 #
 
@@ -10,7 +10,11 @@ echo $((0+1))
 
 echo $((0+2))
 
+set -xv # Liga debug
+
 echo $((0+3))
+
+set +xv # Desliga debug
 
 echo $((0+4))
 
