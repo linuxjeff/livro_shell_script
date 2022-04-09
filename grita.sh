@@ -4,10 +4,22 @@
 # Mostra uma palavra ($TXT) em maiúsculas em com exclamções
 # Exemplo: foo -> !!!!!FOO!!!!!
 
+DEBUG="1"
+
+Debug(){
+  [ "$DEBUG" = 1 ] && echo "----------{ $*"
+}
+
 TXT="gritaria"
+
 TXT="     "$TXT"     "          # Adiciona 5 espaços ao redor
-echo "TXT com espaços: ["$TXT"]"
+
+Debug "TXT com espaços: ["$TXT"]"
+
 TXT=$(echo "$TXT" | tr ' ' '!')   # Troca os espaços por exclamções
-echo "TXT com exclamções: ["$TXT"]"
+
+Debug "TXT com exclamções: ["$TXT"]"
+
 TXT=$(echo "$TXT" | tr a-z A-Z) # Deixa o texto em maiúsculas
+
 echo "$TXT"                   # Mostra a mensagem
