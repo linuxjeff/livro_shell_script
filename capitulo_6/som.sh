@@ -11,5 +11,5 @@ while : ; do               # Loop infinito
   echo -e "\033[10;$freq]" # Muda a frequência no Speaker
   echo "frequência=$freq"  # Mostrar frequência atual
   echo -e '\a'             # Emite frequência atual
-  usleep 100               # Espera 100us
+  sleep 100               # Espera 100us
 done
