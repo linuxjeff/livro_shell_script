@@ -23,14 +23,24 @@ while read LINHA; do
   # convertidos para apenas um espaço normal.
   #
   # Descomente as linhas seguintes para testar
-  echo Com aspas: "$LINHA"
-  echo Sem aspas: $LINHA
+  #echo Com aspas: "$LINHA"
+  #echo Sem aspas: $LINHA
   # Ignorando as linhas de comentário
   [ "$(echo $LINHA | cut -c1)" = '#' ] && continue
   # Ignorando as linhas em branco
   [ "$LINHA" ] || continue
   # Quem sobrou?
-  echo +++ $LINHA
+  #echo +++ $LINHA
+  # Guardando cada palavra da linha em $1, $2, $3, ...
+  # "Suzy é metaleira" fica $1=Suzy $2=é $3=metaleira
+  set - $LINHA
+  # Extraindo os dados
+  # Primeiro vem a chave, o resto é o valor
+  chave=$1
+  shift
+  valor=$*
+  # Conferindo se está tudo certo
+  echo "+++ $chave --> $valor"
 done < "$CONFIG"
 #
 # Configurações lidas, mostre a mensagem
