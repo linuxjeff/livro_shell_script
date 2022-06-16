@@ -40,7 +40,27 @@ while read LINHA; do
   shift
   valor=$*
   # Conferindo se está tudo certo
-  echo "+++ $chave --> $valor"
+  #echo "+++ $chave --> $valor"
+  # Processando as configurações encontradas
+  case "$chave" in
+    UsarCores)
+      [ "$valor" = 'ON' ] && USAR_CORES=1
+      ;;
+      CorFundo)
+      COR_FUNDO=$valor
+      ;;
+      CorLetra)
+      COR_LETRA=$valor
+      ;;
+      Mensagem)
+      MENSAGEM=$valor
+      ;;
+      *)
+      echo "Erro no arquivo de configuração"
+      echo "Opção desconhecida '$chave'"
+      exit 1
+      ;;
+  esac
 done < "$CONFIG"
 #
 # Configurações lidas, mostre a mensagem
