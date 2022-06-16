@@ -26,9 +26,9 @@ while read LINHA; do
   echo Com aspas: "$LINHA"
   echo Sem aspas: $LINHA
   # Ignorando as linhas de comentário
-  ["$(echo $LINHA | cut -c1)" = '#'] && continue
+  [ "$(echo $LINHA | cut -c1)" = '#' ] && continue
   # Ignorando as linhas em branco
-  ["$LINHA"] || continue
+  [ "$LINHA" ] || continue
   # Quem sobrou?
   echo +++ $LINHA
 done < "$CONFIG"
