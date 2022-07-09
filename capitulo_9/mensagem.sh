@@ -36,24 +36,24 @@ while read LINHA; do
   set - $LINHA
   # Extraindo os dados
   # Primeiro vem a chave, o resto é o valor
-  chave=$1
+  chave=$(echo $1 | tr A-Z a-z)
   shift
   valor=$*
   # Conferindo se está tudo certo
   #echo "+++ $chave --> $valor"
   # Processando as configurações encontradas
   case "$chave" in
-    UsarCores)
-      [ "$valor" = 'ON' ] && USAR_CORES=1
+    usarcores)
+      [ "$(echo $valor | tr A-Z a-z)" = 'on' ] && USAR_CORES=1
       ;;
-      CorFundo)
-      COR_FUNDO=$valor
+      corfundo)
+      COR_FUNDO=$(echo "$valor" | tr -d -c 0-9)
       ;;
-      CorLetra)
-      COR_LETRA=$valor
+      corletra)
+      COR_LETRA=$(echo "$valor" | tr -d -c 0-9)
       ;;
-      Mensagem)
-      MENSAGEM=$valor
+      mensagem)
+      ["$valor"] && MENSAGEM=$valor
       ;;
       *)
       echo "Erro no arquivo de configuração"
