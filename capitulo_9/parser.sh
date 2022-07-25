@@ -18,3 +18,22 @@ elif [ ! -r "$CONFIG" ]; then
   echo "Erro: Não consigo ler o arquivo $CONFIG"
   exit 1
 fi
+
+# Loop para ler linha a linha a configuração, guardando em $LINHA
+# Dica: Use $LINHA sem "aspas" para remover os brancos
+while read LINHA; do
+  # Ignorando as linhas de cómentário
+  [ "$(echo $LINHA | cut -c1)" = '#' ] && continue
+  # ignorando as linhas em brancos
+  [ "$LINHA" ] || continue
+  # Guardando cada palavra da linha em $1, $2, $3, ...
+  set - $LINHA
+
+  # Extraindo os dados (chaves sempre maiúsculas)
+  chave=$(echo $1 | tr a-z A-Z)
+  shift
+  valor=$*
+
+  # Mostrando chave="valor" na saída padrão
+  echo "CONF_$chave=\"$valor\""
+done < "$CONFIG"
