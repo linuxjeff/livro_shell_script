@@ -12,56 +12,16 @@ USAR_CORES=0               # config: UsarCores
 COR_LETRA=                 # config: CorLetra
 COR_FUNDO=                 # config: CorFundo
 MENSAGEM='Mensagem padrão' # config: Mensagem
-#
-# Loop para ler linha a linha a configuração, guardando em $LINHA
-#
-while read LINHA; do
-  # DICA:
-  # Basta referenciar o $LINHA sem aspas para que todos
-  # os brancos do início e fim da linha sejam removidos,
-  # e os espaços e TABs entre a chave e o valor sejam
-  # convertidos para apenas um espaço normal.
-  #
-  # Descomente as linhas seguintes para testar
-  #echo Com aspas: "$LINHA"
-  #echo Sem aspas: $LINHA
-  # Ignorando as linhas de comentário
-  [ "$(echo $LINHA | cut -c1)" = '#' ] && continue
-  # Ignorando as linhas em branco
-  [ "$LINHA" ] || continue
-  # Quem sobrou?
-  #echo +++ $LINHA
-  # Guardando cada palavra da linha em $1, $2, $3, ...
-  # "Suzy é metaleira" fica $1=Suzy $2=é $3=metaleira
-  set - $LINHA
-  # Extraindo os dados
-  # Primeiro vem a chave, o resto é o valor
-  chave=$(echo $1 | tr A-Z a-z)
-  shift
-  valor=$*
-  # Conferindo se está tudo certo
-  #echo "+++ $chave --> $valor"
-  # Processando as configurações encontradas
-  case "$chave" in
-    usarcores)
-      [ "$(echo $valor | tr A-Z a-z)" = 'on' ] && USAR_CORES=1
-      ;;
-      corfundo)
-      COR_FUNDO=$(echo "$valor" | tr -d -c 0-9)
-      ;;
-      corletra)
-      COR_LETRA=$(echo "$valor" | tr -d -c 0-9)
-      ;;
-      mensagem)
-      ["$valor"] && MENSAGEM=$valor
-      ;;
-      *)
-      echo "Erro no arquivo de configuração"
-      echo "Opção desconhecida '$chave'"
-      exit 1
-      ;;
-  esac
-done < "$CONFIG"
+
+# Carregando a configuração do arquivo externo
+eval $(./parser.sh $CONFIG)
+
+# Processando os valores
+[ "$(echo $CONF_USARCORES | tr A-Z a-z)" = 'on' ] && USAR_CORES=1
+COR_FUNDO=$(echo $CONF_CORFUNDO | tr -d -c 0-9 | tr -d -c 0-9) # Só números
+COR_LETRA=$(echo $CONF_CORLETRA | tr -d -c 0-9 | tr -d -c 0-9) # Só números
+[ "$CONF_MENSAGEM" ] && MENSAGEM=$CONF_MENSAGEM
+
 #
 # Configurações lidas, mostre a mensagem
 #
